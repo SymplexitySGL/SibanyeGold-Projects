@@ -22,6 +22,13 @@ GO
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
+SET QUOTED_IDENTIFIER ON
+SET ANSI_NULLS ON
+GO
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -529,13 +536,15 @@ AS
                 AND [Start Date] < @Date
 
 
-        EXEC dbo.sp_SendGT_Reminder @ResourceTag = @ResourceTag, -- int
+
+--- Reminder Section
+
+  EXEC dbo.sp_SendGT_Reminder @ResourceTag = @ResourceTag, -- int
             @TDate = @Date, -- nvarchar(30)
-            @MovementType = N'Same Designation', -- nvarchar(50)
+            @MovementType = @MovementType, -- nvarchar(50)
             @PaymentId = @PaymentID -- nvarchar(10)
 
 		EXEC  ARMSsp_Reminder_Distributor
-        
 
         COMMIT
     END TRY
@@ -549,6 +558,10 @@ AS
         RAISERROR ('%s',16, 1, @sMsg)
         RAISERROR ('Transactions on Section "%s" have been rolled back.',16, 1, @Section)
     END CATCH
+-------------------------------------------------------------------------------------------------------------------------
+
+GO
+
 -------------------------------------------------------------------------------------------------------------------------
 
 GO

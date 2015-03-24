@@ -566,13 +566,15 @@ AS
 
 --- Reminder Section
 
+
+--- Reminder Section
+
   EXEC dbo.sp_SendGT_Reminder @ResourceTag = @ResourceTag, -- int
             @TDate = @Date, -- nvarchar(30)
             @MovementType = @MovementType, -- nvarchar(50)
             @PaymentId = @PaymentID -- nvarchar(10)
 
 		EXEC  ARMSsp_Reminder_Distributor
-
 
 
 
@@ -589,6 +591,11 @@ AS
         RAISERROR ('%s',16, 1, @sMsg)
         RAISERROR ('Transactions on Section "%s" have been rolled back.',16, 1, @Section)
     END CATCH
+-------------------------------------------------------------------------------------------------------------------------
+
+GO
+
+
 -------------------------------------------------------------------------------------------------------------------------
 
 GO
