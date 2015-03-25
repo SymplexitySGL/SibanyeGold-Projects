@@ -541,7 +541,7 @@ AS
 
   EXEC dbo.sp_SendGT_Reminder @ResourceTag = @ResourceTag, -- int
             @TDate = @Date, -- nvarchar(30)
-            @MovementType = @MovementType, -- nvarchar(50)
+            @MovementType = 'Transfer', -- nvarchar(50)
             @PaymentId = @PaymentID -- nvarchar(10)
 
 		EXEC  ARMSsp_Reminder_Distributor
