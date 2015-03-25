@@ -82,7 +82,7 @@ AS
             FROM    [ARMS Reminder ARMS User Recipient Groups] AS araur
             WHERE   [Group No] = @Group_3
         OPEN Email3
-        FETCH NEXT FROM Email2 INTO @Email
+        FETCH NEXT FROM Email3 INTO @Email
         WHILE ( @@FETCH_STATUS <> -1 )
             BEGIN
 
@@ -90,7 +90,7 @@ AS
                 SET @Email_all = @Email_all + @Email + ';'
 
 
-                FETCH NEXT FROM Email2 INTO @Email
+                FETCH NEXT FROM Email3 INTO @Email
 
             END
 
@@ -176,7 +176,6 @@ SET  @Periodid = (SELECT MAX([Period ID]) FROM [dbo].[Calendar Periods] WHERE [C
 
 
 ---Reminder Group
-SELECT DISTINCT [operation] FROM [dbo].[Organisation Structure] AS os WHERE [End date] = '99991231'
 
 SET @ReminderGroup = CASE WHEN @FromOperation IN ( 'SGWH', 'SGSS', 'SGA',
                                                    'Sibanye Gold', 'SGFP',
