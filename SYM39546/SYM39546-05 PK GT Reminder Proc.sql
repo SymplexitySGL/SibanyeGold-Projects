@@ -186,6 +186,9 @@ SET @ReminderGroup = CASE WHEN @FromOperation IN ( 'SGWH', 'SGSS', 'SGA',
                                               THEN 23
                                               ELSE CASE WHEN @FromOperation = 'Driefontein'
                                                         THEN 21
+														ELSE CASE WHEN @FromOperation IN ('Rand Uranium','Ezulwini')
+														THEN 33
+														END
                                                    END
                                          END
                                END
@@ -201,6 +204,10 @@ SET @ReminderGroup2 = CASE WHEN @Operation IN ( 'SGWH', 'SGSS', 'SGA',
                                               THEN 23
                                               ELSE CASE WHEN @Operation = 'Driefontein'
                                                         THEN 21
+
+														ELSE CASE WHEN @Operation IN ('Rand Uranium','Ezulwini')
+														THEN 33
+														END
                                                    END
                                          END
                                END
