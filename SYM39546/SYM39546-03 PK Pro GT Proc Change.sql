@@ -99,8 +99,29 @@ AS
 
 		DECLARE @PI INT
   
-		SET @PI = (SELECT [Period ID] FROM [dbo].[Calendar Periods] WHERE  DATEADD(dd, -1, @Date) BETWEEN [Start Date] AND [End Date] AND [Completed] = 'Yes' AND RunType = 'Normal' AND [Calendar] = @Cycle)
-		      
+        SET @PI = ( SELECT  [Period ID]
+                    FROM    [dbo].[Calendar Periods]
+                    WHERE   DATEADD(dd, -1, @Date) BETWEEN [Start Date]
+                                                   AND     [End Date]
+                            AND [Completed] = 'Yes'
+                            AND RunType = 'Normal'
+                            AND [Calendar] = @Cycle
+                  )
+		     
+			 
+        IF @PI IS NULL
+            BEGIN
+                SET @PI = ( SELECT  [Period ID]
+                            FROM    [dbo].[Calendar Periods]
+                            WHERE   DATEADD(dd, -1, @Date) BETWEEN [Start Date]
+                                                           AND
+                                                              [End Date]
+                                    AND [Completed] = 'No'
+                                    AND RunType = 'Normal'
+                                    AND [Calendar] = @Cycle
+                          )
+            END
+			  
         DECLARE @StartingPeriodID INT
         DECLARE @StartingPeriodIDNew INT
   
