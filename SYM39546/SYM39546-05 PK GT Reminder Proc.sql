@@ -16,7 +16,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 	Sub section
 -------------------------------------------------------------------*/
 GO
-CREATE FUNCTION dbo.Fn_ReminderEmails
+ALTER FUNCTION dbo.Fn_ReminderEmails
     (
       @Group_1 INT ,
       @Group_2 INT,
@@ -108,7 +108,11 @@ ALTER TABLE [dbo].[ARMS Reminder Transactions] ALTER COLUMN [Recipient Email Add
 
 GO
 
-CREATE PROCEDURE sp_SendGT_Reminder (@ResourceTag INT,
+SET QUOTED_IDENTIFIER ON
+SET ANSI_NULLS ON
+GO
+
+ALTER PROCEDURE sp_SendGT_Reminder (@ResourceTag INT,
 
 @TDate NVARCHAR(30),
 @MovementType NVARCHAR(50),
@@ -214,12 +218,12 @@ SET @ReminderGroup2 = CASE WHEN @Operation IN ( 'SGWH', 'SGSS', 'SGA',
 
 -- Balances Details
 
-SET @Accum = 0
-SET @Annual = 0
-SET @LQS = 0
-SET @Family = 0
-SET @Mine = 0
-SET @Sick = 0
+SET @Accum = 0.00000
+SET @Annual = 0.00000
+SET @LQS = 0.00000
+SET @Family = 0.00000
+SET @Mine = 0.00000
+SET @Sick = 0.00000
 
 
 --SELECT * FROM [dbo].[Output Transactions] OT WHERE [Resource Tag] = 100367459 AND [Period ID] = @Periodid
@@ -251,6 +255,28 @@ END
 --SELECT @LQS
 
 
+SET @Accum = ISNULL(@Accum, '0.00000')
+
+SET @Annual = ISNULL(@Annual, '0.00000')
+
+SET @Family = ISNULL(@Family, '0.00000')
+
+SET @Mine = ISNULL(@Mine, '0.00000')
+
+SET @Sick = ISNULL(@Sick, '0.00000')
+
+SET @LQS = ISNULL(@LQS, '0.00000')
+
+
+--SELECT @Accum,@Annual,@Family,@Mine,@Sick,@LQS
+
+
+
+
+
+
+
+
 SET @Accum = LEFT(@Accum, LEN(@Accum) - 3)
 
 SET @Annual = LEFT(@Annual, LEN(@Annual) - 3)
@@ -263,17 +289,6 @@ SET @Sick = LEFT(@Sick, LEN(@Sick) - 3)
 
 SET @LQS = LEFT(@LQS, LEN(@LQS) - 3)
 
-SET @Accum = ISNULL(@Accum, '0.00')
-
-SET @Annual = ISNULL(@Annual, '0.00')
-
-SET @Family = ISNULL(@Family, '0.00')
-
-SET @Mine = ISNULL(@Mine, '0.00')
-
-SET @Sick = ISNULL(@Sick, '0.00')
-
-SET @LQS = ISNULL(@LQS, '0.00')
 
 
 
@@ -493,7 +508,9 @@ style="font-family: Arial;">'+@Family+'</span></td>
           0  -- Batch No - int
         )
 
-		GO
+GO
+
+DELETE FROM [dbo].[Emp Group Transfer Pro] WHERE [Resource Tag] = 2130172247
 -------------------------------------------------------------------------------------------------------------------------
 go
 
